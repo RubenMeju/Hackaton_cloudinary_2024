@@ -5,6 +5,13 @@ import {
   applyGenerativeRemove,
 } from "../services/cloudinaryService";
 
+// Función auxiliar para extraer el publicId correctamente eliminando cualquier parámetro de consulta
+const extractPublicId = (url: string): string => {
+  // Tomamos la parte antes del `?` (si existe)
+  const [publicId] = url.split("?")[0].split("/").pop()?.split(".") || [];
+  return publicId;
+};
+
 export const useCloudinaryUpload = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [transformedUrl, setTransformedUrl] = useState<string | null>(null);
@@ -14,27 +21,34 @@ export const useCloudinaryUpload = () => {
 
   // Subir imagen
   const handleImageUpload = async (file: File) => {
-    setIsLoading(true); // Inicia el loader
+    setIsLoading(true);
     try {
       const uploadedUrl = await uploadImage(file);
-      console.log("uploadedUrl: ", uploadedUrl);
       setImageUrl(uploadedUrl);
       setErrorMessage(null);
 
       // Extrae el public_id de la URL
-      const publicId = uploadedUrl.split("/").pop()?.split(".")[0] || "";
-      setCurrentPublicId(publicId);
+      const publicId = extractPublicId(uploadedUrl);
+
+      console.log("uploadedUrl: ", uploadedUrl);
+      console.log("public_id: ", publicId);
+
+      setCurrentPublicId(publicId); // Guardamos el publicId inicial de la imagen subida
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
-      setIsLoading(false); // Detén el loader una vez que termine
+      setIsLoading(false);
     }
   };
 
-  // Aplicar reemplazo generativo
+  // Aplicar reemplazo generativo (Activa loader solo durante la transformación)
   const applyTransformationReplace = async (from: string, to: string) => {
     if (currentPublicId) {
-      setIsLoading(true); // Inicia el loader
+      console.log(
+        "currentPublicId en applyGenerativeReplace: ",
+        currentPublicId
+      );
+      setIsLoading(true); // Inicia el loader para la transformación
       try {
         const transformedImageUrl = await applyGenerativeReplace(
           currentPublicId,
@@ -43,22 +57,24 @@ export const useCloudinaryUpload = () => {
         );
         setTransformedUrl(transformedImageUrl);
 
-        // Actualiza el public_id para usar el de la imagen transformada
-        const newPublicId =
-          transformedImageUrl.split("/").pop()?.split(".")[0] || "";
+        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
+        const newPublicId = extractPublicId(transformedImageUrl);
+        console.log("newPublicId after Replace: ", newPublicId);
+
+        // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
         setCurrentPublicId(newPublicId);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setIsLoading(false); // Detén el loader
+        setIsLoading(false);
       }
     }
   };
 
-  // Aplicar eliminación generativa
+  // Aplicar eliminación generativa (Activa loader solo durante la transformación)
   const applyTransformationRemove = async (inputPrompt: string) => {
     if (currentPublicId) {
-      setIsLoading(true); // Inicia el loader
+      setIsLoading(true); // Inicia el loader para la transformación
       try {
         const transformedImageUrl = await applyGenerativeRemove(
           currentPublicId,
@@ -66,14 +82,16 @@ export const useCloudinaryUpload = () => {
         );
         setTransformedUrl(transformedImageUrl);
 
-        // Actualiza el public_id para usar el de la imagen transformada
-        const newPublicId =
-          transformedImageUrl.split("/").pop()?.split(".")[0] || "";
+        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
+        const newPublicId = extractPublicId(transformedImageUrl);
+        console.log("newPublicId after Remove: ", newPublicId);
+
+        // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
         setCurrentPublicId(newPublicId);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
-        setIsLoading(false); // Detén el loader
+        setIsLoading(false);
       }
     }
   };

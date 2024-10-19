@@ -22,7 +22,7 @@ export default function App() {
 
   const handleApplyRemove = () => {
     if (imageUrl) {
-      applyTransformationRemove("headphones");
+      applyTransformationRemove("cap");
     }
   };
 
