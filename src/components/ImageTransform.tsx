@@ -1,5 +1,3 @@
-import React from "react";
-
 interface ImageTransformProps {
   originalUrl: string | null;
   transformedUrl: string | null;

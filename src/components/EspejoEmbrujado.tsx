@@ -8,13 +8,19 @@ export default function EspejoEmbrujado() {
     transformedUrl,
     errorMessage,
     handleImageUpload,
-    applyTransformation,
+    applyTransformationReplace,
+    applyTransformationRemove,
   } = useCloudinaryUpload();
 
-  const handleApplyTransformation = () => {
+  const handleApplyReplace = () => {
     if (imageUrl) {
-      const publicId = imageUrl.split("/").pop()?.split(".")[0] || ""; // Extrae el public_id
-      applyTransformation(publicId, "clothes", "hulk costume");
+      applyTransformationReplace("clothes", "hulk costume");
+    }
+  };
+
+  const handleApplyRemove = () => {
+    if (imageUrl) {
+      applyTransformationRemove("table");
     }
   };
 
@@ -25,9 +31,14 @@ export default function EspejoEmbrujado() {
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       <ImageTransform originalUrl={imageUrl} transformedUrl={transformedUrl} />
       {imageUrl && (
-        <button onClick={handleApplyTransformation}>
-          Aplicar Disfraz de Halloween
-        </button>
+        <>
+          <button onClick={handleApplyReplace}>
+            Aplicar Disfraz de Halloween
+          </button>
+          <button onClick={handleApplyRemove}>
+            Eliminar Objeto (Ej: Mesa)
+          </button>
+        </>
       )}
     </div>
   );
