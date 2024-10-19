@@ -36,6 +36,31 @@ export const uploadImage = async (file: File) => {
   }
 };
 
+// services/cloudinaryService.ts
+export const uploadTransformedImage = async (imageUrl: string) => {
+  const formData = new FormData();
+  formData.append("file", imageUrl);
+  formData.append("upload_preset", UPLOAD_PRESET); // Usa tu preset de Cloudinary aquí
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  // Verificamos si la respuesta fue exitosa
+  if (!response.ok) {
+    throw new Error(
+      "Error al subir la imagen transformada: " + response.statusText
+    );
+  }
+
+  const data = await response.json(); // Parsear la respuesta JSON
+  return data.secure_url; // Devolver la URL segura de la imagen subida
+};
+
 // Aplicar reemplazo generativo
 export const applyGenerativeReplace = (
   publicId: string,

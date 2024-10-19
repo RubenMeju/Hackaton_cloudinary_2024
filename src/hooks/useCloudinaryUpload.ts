@@ -4,11 +4,11 @@ import {
   applyGenerativeReplace,
   applyGenerativeRemove,
   applyGenerativeBackgroundReplace,
+  uploadTransformedImage, // Nueva función para guardar la imagen transformada
 } from "../services/cloudinaryService";
 
 // Función auxiliar para extraer el publicId correctamente eliminando cualquier parámetro de consulta
 const extractPublicId = (url: string): string => {
-  // Tomamos la parte antes del `?` (si existe)
   const [publicId] = url.split("?")[0].split("/").pop()?.split(".") || [];
   return publicId;
 };
@@ -45,11 +45,7 @@ export const useCloudinaryUpload = () => {
   // Aplicar reemplazo generativo (Activa loader solo durante la transformación)
   const applyTransformationReplace = async (from: string, to: string) => {
     if (currentPublicId) {
-      console.log(
-        "currentPublicId en applyGenerativeReplace: ",
-        currentPublicId
-      );
-      setIsLoading(true); // Inicia el loader para la transformación
+      setIsLoading(true);
       try {
         const transformedImageUrl = await applyGenerativeReplace(
           currentPublicId,
@@ -58,8 +54,10 @@ export const useCloudinaryUpload = () => {
         );
         setTransformedUrl(transformedImageUrl);
 
-        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
-        const newPublicId = extractPublicId(transformedImageUrl);
+        // Subimos la imagen transformada para obtener un nuevo public_id
+        const savedImageUrl = await uploadTransformedImage(transformedImageUrl);
+        const newPublicId = extractPublicId(savedImageUrl);
+
         console.log("newPublicId after Replace: ", newPublicId);
 
         // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
@@ -75,7 +73,7 @@ export const useCloudinaryUpload = () => {
   // Aplicar eliminación generativa (Activa loader solo durante la transformación)
   const applyTransformationRemove = async (inputPrompt: string) => {
     if (currentPublicId) {
-      setIsLoading(true); // Inicia el loader para la transformación
+      setIsLoading(true);
       try {
         const transformedImageUrl = await applyGenerativeRemove(
           currentPublicId,
@@ -83,11 +81,12 @@ export const useCloudinaryUpload = () => {
         );
         setTransformedUrl(transformedImageUrl);
 
-        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
-        const newPublicId = extractPublicId(transformedImageUrl);
+        // Subimos la imagen transformada para obtener un nuevo public_id
+        const savedImageUrl = await uploadTransformedImage(transformedImageUrl);
+        const newPublicId = extractPublicId(savedImageUrl);
+
         console.log("newPublicId after Remove: ", newPublicId);
 
-        // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
         setCurrentPublicId(newPublicId);
       } catch (error) {
         setErrorMessage(error.message);
@@ -100,7 +99,7 @@ export const useCloudinaryUpload = () => {
   // Aplicar cambio background (Activa loader solo durante la transformación)
   const applyTransformationRemoveBackground = async (inputPrompt: string) => {
     if (currentPublicId) {
-      setIsLoading(true); // Inicia el loader para la transformación
+      setIsLoading(true);
       try {
         const transformedImageUrl = await applyGenerativeBackgroundReplace(
           currentPublicId,
@@ -108,11 +107,12 @@ export const useCloudinaryUpload = () => {
         );
         setTransformedUrl(transformedImageUrl);
 
-        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
-        const newPublicId = extractPublicId(transformedImageUrl);
-        console.log("newPublicId after Remove: ", newPublicId);
+        // Subimos la imagen transformada para obtener un nuevo public_id
+        const savedImageUrl = await uploadTransformedImage(transformedImageUrl);
+        const newPublicId = extractPublicId(savedImageUrl);
 
-        // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
+        console.log("newPublicId after Background Replace: ", newPublicId);
+
         setCurrentPublicId(newPublicId);
       } catch (error) {
         setErrorMessage(error.message);
@@ -126,7 +126,7 @@ export const useCloudinaryUpload = () => {
     imageUrl,
     transformedUrl,
     errorMessage,
-    isLoading, // Exponer isLoading para usar en el componente
+    isLoading,
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,

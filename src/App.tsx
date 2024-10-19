@@ -17,7 +17,7 @@ export default function App() {
 
   const handleApplyReplace = () => {
     if (imageUrl) {
-      applyTransformationReplace("clothes", "wonder woman");
+      applyTransformationReplace("face", "Mayan mask");
     }
   };
 
