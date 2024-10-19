@@ -8,7 +8,7 @@ const ImageTransform: React.FC<ImageTransformProps> = ({
   transformedUrl,
 }) => {
   return (
-    <div>
+    <div className="flex gap-x-10">
       {originalUrl && (
         <div>
           <h3>Imagen Original</h3>

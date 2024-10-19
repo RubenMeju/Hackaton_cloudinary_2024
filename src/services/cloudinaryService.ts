@@ -53,10 +53,7 @@ export const applyGenerativeRemove = (publicId: string) => {
   const transformedImage = cld
     .image(publicId)
     .effect(
-      generativeRemove()
-        .prompt("headphones")
-        .detectMultiple(false)
-        .removeShadow(true)
+      generativeRemove().prompt("cap").detectMultiple(false).removeShadow(false)
     );
 
   // Devuelve la URL transformada
