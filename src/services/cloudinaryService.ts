@@ -41,6 +41,7 @@ export const applyGenerativeReplace = (
   from: string,
   to: string
 ) => {
+  console.log("applyGenerativeReplace");
   const transformedImage = cld
     .image(publicId)
     .effect(generativeReplace().from(from).to(to));
@@ -48,12 +49,16 @@ export const applyGenerativeReplace = (
 };
 
 // Aplicar eliminación generativa
-export const applyGenerativeRemove = (publicId: string) => {
+export const applyGenerativeRemove = (publicId: string, inputPromt: string) => {
+  console.log("applyGenerativeRemove");
   // Aplica el efecto de eliminación generativa
   const transformedImage = cld
     .image(publicId)
     .effect(
-      generativeRemove().prompt("cap").detectMultiple(false).removeShadow(false)
+      generativeRemove()
+        .prompt(inputPromt)
+        .detectMultiple(false)
+        .removeShadow(false)
     );
 
   // Devuelve la URL transformada

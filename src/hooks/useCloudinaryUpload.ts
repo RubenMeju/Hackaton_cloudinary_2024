@@ -15,8 +15,9 @@ export const useCloudinaryUpload = () => {
   const handleImageUpload = async (file: File) => {
     try {
       const uploadedUrl = await uploadImage(file);
+      console.log("uploadedUrl: ", uploadedUrl);
       setImageUrl(uploadedUrl);
-      setTransformedUrl(uploadedUrl);
+      // setTransformedUrl(uploadedUrl);
       setErrorMessage(null);
 
       // Extrae el public_id de la URL
@@ -45,11 +46,11 @@ export const useCloudinaryUpload = () => {
   };
 
   // Aplicar eliminación generativa
-  const applyTransformationRemove = (itemToRemove: string) => {
+  const applyTransformationRemove = (inputPromt: string) => {
     if (currentPublicId) {
       const transformedImageUrl = applyGenerativeRemove(
         currentPublicId,
-        itemToRemove
+        inputPromt
       );
       setTransformedUrl(transformedImageUrl);
 
