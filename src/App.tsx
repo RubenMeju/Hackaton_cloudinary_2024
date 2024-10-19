@@ -8,6 +8,7 @@ export default function App() {
     imageUrl,
     transformedUrl,
     errorMessage,
+    isLoading,
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,
@@ -15,7 +16,7 @@ export default function App() {
 
   const handleApplyReplace = () => {
     if (imageUrl) {
-      applyTransformationReplace("clothes", "femme fatale");
+      applyTransformationReplace("clothes", "wonder woman");
     }
   };
 
@@ -32,6 +33,7 @@ export default function App() {
       </h1>
       <ImageUpload onUpload={handleImageUpload} />
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {isLoading && <p>Cargando...</p>} {/* Loader */}
       <ImageTransform originalUrl={imageUrl} transformedUrl={transformedUrl} />
       {imageUrl && (
         <div className="flex gap-10">
@@ -39,6 +41,7 @@ export default function App() {
             type="button"
             className="bg-gray-400 py-4 px-8 border border-white rounded-md"
             onClick={handleApplyReplace}
+            disabled={isLoading} // Deshabilitar botones mientras carga
           >
             Aplicar Disfraz de Halloween
           </button>
@@ -46,6 +49,7 @@ export default function App() {
             type="button"
             className="bg-gray-400 py-4 px-8 border border-white rounded-md"
             onClick={handleApplyRemove}
+            disabled={isLoading} // Deshabilitar botones mientras carga
           >
             Eliminar Objeto (Ej: Mesa)
           </button>

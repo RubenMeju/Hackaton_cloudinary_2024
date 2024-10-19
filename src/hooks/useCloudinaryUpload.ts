@@ -10,14 +10,15 @@ export const useCloudinaryUpload = () => {
   const [transformedUrl, setTransformedUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentPublicId, setCurrentPublicId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false); // Estado de carga
 
   // Subir imagen
   const handleImageUpload = async (file: File) => {
+    setIsLoading(true); // Inicia el loader
     try {
       const uploadedUrl = await uploadImage(file);
       console.log("uploadedUrl: ", uploadedUrl);
       setImageUrl(uploadedUrl);
-      // setTransformedUrl(uploadedUrl);
       setErrorMessage(null);
 
       // Extrae el public_id de la URL
@@ -25,39 +26,55 @@ export const useCloudinaryUpload = () => {
       setCurrentPublicId(publicId);
     } catch (error) {
       setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false); // Detén el loader una vez que termine
     }
   };
 
   // Aplicar reemplazo generativo
-  const applyTransformationReplace = (from: string, to: string) => {
+  const applyTransformationReplace = async (from: string, to: string) => {
     if (currentPublicId) {
-      const transformedImageUrl = applyGenerativeReplace(
-        currentPublicId,
-        from,
-        to
-      );
-      setTransformedUrl(transformedImageUrl);
+      setIsLoading(true); // Inicia el loader
+      try {
+        const transformedImageUrl = await applyGenerativeReplace(
+          currentPublicId,
+          from,
+          to
+        );
+        setTransformedUrl(transformedImageUrl);
 
-      // Actualiza el public_id para usar el de la imagen transformada
-      const newPublicId =
-        transformedImageUrl.split("/").pop()?.split(".")[0] || "";
-      setCurrentPublicId(newPublicId);
+        // Actualiza el public_id para usar el de la imagen transformada
+        const newPublicId =
+          transformedImageUrl.split("/").pop()?.split(".")[0] || "";
+        setCurrentPublicId(newPublicId);
+      } catch (error) {
+        setErrorMessage(error.message);
+      } finally {
+        setIsLoading(false); // Detén el loader
+      }
     }
   };
 
   // Aplicar eliminación generativa
-  const applyTransformationRemove = (inputPromt: string) => {
+  const applyTransformationRemove = async (inputPrompt: string) => {
     if (currentPublicId) {
-      const transformedImageUrl = applyGenerativeRemove(
-        currentPublicId,
-        inputPromt
-      );
-      setTransformedUrl(transformedImageUrl);
+      setIsLoading(true); // Inicia el loader
+      try {
+        const transformedImageUrl = await applyGenerativeRemove(
+          currentPublicId,
+          inputPrompt
+        );
+        setTransformedUrl(transformedImageUrl);
 
-      // Actualiza el public_id para usar el de la imagen transformada
-      const newPublicId =
-        transformedImageUrl.split("/").pop()?.split(".")[0] || "";
-      setCurrentPublicId(newPublicId);
+        // Actualiza el public_id para usar el de la imagen transformada
+        const newPublicId =
+          transformedImageUrl.split("/").pop()?.split(".")[0] || "";
+        setCurrentPublicId(newPublicId);
+      } catch (error) {
+        setErrorMessage(error.message);
+      } finally {
+        setIsLoading(false); // Detén el loader
+      }
     }
   };
 
@@ -65,6 +82,7 @@ export const useCloudinaryUpload = () => {
     imageUrl,
     transformedUrl,
     errorMessage,
+    isLoading, // Exponer isLoading para usar en el componente
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,
