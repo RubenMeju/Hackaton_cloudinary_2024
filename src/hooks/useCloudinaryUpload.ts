@@ -3,6 +3,7 @@ import {
   uploadImage,
   applyGenerativeReplace,
   applyGenerativeRemove,
+  applyGenerativeBackgroundReplace,
 } from "../services/cloudinaryService";
 
 // Función auxiliar para extraer el publicId correctamente eliminando cualquier parámetro de consulta
@@ -96,6 +97,31 @@ export const useCloudinaryUpload = () => {
     }
   };
 
+  // Aplicar cambio background (Activa loader solo durante la transformación)
+  const applyTransformationRemoveBackground = async (inputPrompt: string) => {
+    if (currentPublicId) {
+      setIsLoading(true); // Inicia el loader para la transformación
+      try {
+        const transformedImageUrl = await applyGenerativeBackgroundReplace(
+          currentPublicId,
+          inputPrompt
+        );
+        setTransformedUrl(transformedImageUrl);
+
+        // Extraemos el nuevo public_id limpio (sin parámetros de consulta)
+        const newPublicId = extractPublicId(transformedImageUrl);
+        console.log("newPublicId after Remove: ", newPublicId);
+
+        // Actualizamos el currentPublicId con el nuevo publicId de la imagen transformada
+        setCurrentPublicId(newPublicId);
+      } catch (error) {
+        setErrorMessage(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return {
     imageUrl,
     transformedUrl,
@@ -104,5 +130,6 @@ export const useCloudinaryUpload = () => {
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,
+    applyTransformationRemoveBackground,
   };
 };

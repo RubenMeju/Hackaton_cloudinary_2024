@@ -2,6 +2,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import {
   generativeReplace,
   generativeRemove,
+  generativeBackgroundReplace,
 } from "@cloudinary/url-gen/actions/effect";
 
 const CLOUD_NAME = "meju";
@@ -60,6 +61,19 @@ export const applyGenerativeRemove = (publicId: string, inputPromt: string) => {
         .detectMultiple(false)
         .removeShadow(false)
     );
+
+  // Devuelve la URL transformada
+  return transformedImage.toURL();
+};
+
+// Aplicar cambio background
+export const applyGenerativeBackgroundReplace = (
+  publicId: string,
+  inputPromt: string
+) => {
+  const transformedImage = cld
+    .image(publicId)
+    .effect(generativeBackgroundReplace().prompt(inputPromt));
 
   // Devuelve la URL transformada
   return transformedImage.toURL();

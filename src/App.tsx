@@ -12,6 +12,7 @@ export default function App() {
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,
+    applyTransformationRemoveBackground,
   } = useCloudinaryUpload();
 
   const handleApplyReplace = () => {
@@ -23,6 +24,12 @@ export default function App() {
   const handleApplyRemove = () => {
     if (imageUrl) {
       applyTransformationRemove("cap");
+    }
+  };
+
+  const handleApplyRemoveBackground = () => {
+    if (imageUrl) {
+      applyTransformationRemoveBackground("party Halloween");
     }
   };
 
@@ -52,6 +59,15 @@ export default function App() {
             disabled={isLoading} // Deshabilitar botones mientras carga
           >
             Eliminar Objeto (Ej: Mesa)
+          </button>
+
+          <button
+            type="button"
+            className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+            onClick={handleApplyRemoveBackground}
+            disabled={isLoading} // Deshabilitar botones mientras carga
+          >
+            Cambiar background
           </button>
         </div>
       )}
