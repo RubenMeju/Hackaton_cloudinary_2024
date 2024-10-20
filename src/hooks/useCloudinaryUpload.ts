@@ -13,11 +13,15 @@ const extractPublicId = (url: string): string => {
   return publicId;
 };
 
+const urlFirstImg =
+  "https://res.cloudinary.com/meju/image/upload/v1729449267/zlnmn8wiblyolg6fscyj.webp";
 export const useCloudinaryUpload = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(urlFirstImg);
   const [transformedUrl, setTransformedUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentPublicId, setCurrentPublicId] = useState<string | null>(null);
+  const [currentPublicId, setCurrentPublicId] = useState<string | null>(
+    "zlnmn8wiblyolg6fscyj"
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false); // Estado de carga
 
   // Subir imagen

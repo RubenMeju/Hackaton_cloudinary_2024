@@ -8,6 +8,7 @@ import Fog from "./components/Fog";
 import Loading from "./components/Loading";
 import FormGroup from "./components/FormGroup"; // Importar el nuevo componente
 import { useLightningEffect } from "./hooks/useLightningEffect"; // Importar el hook
+import ImageExampleGallery from "./components/ImageExampleGallery";
 
 export default function App() {
   const {
@@ -65,6 +66,7 @@ export default function App() {
         }`}
       ></div>
       <Fog />
+
       <div className="w-[90%] z-10 text-center">
         <h1 className="text-6xl font-bold py-4 text-red-600 animate-pulse">
           Hackaton Cloudinary
@@ -73,7 +75,10 @@ export default function App() {
           Convierte tus imágenes en aterradoras creaciones
         </p>
         <div className="">
-          <ImageUpload onUpload={handleImageUpload} />
+          <div className="max-w-md m-auto flex">
+            <ImageExampleGallery />
+            <ImageUpload onUpload={handleImageUpload} />
+          </div>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           {isLoading && <Loading />} {/* Loader */}
           <ImageTransform
@@ -90,6 +95,7 @@ export default function App() {
           )}
         </div>
       </div>
+
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(5)].map((_, i) => (
           <Bat key={`bat-${i}`} />
