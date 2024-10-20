@@ -15,7 +15,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
   isLoading,
 }) => {
   return (
-    <div className="max-w-2xl py-8 flex flex-col gap-10">
+    <div className="max-w-2xl m-auto py-8 flex flex-col gap-10">
       <form
         className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
         onSubmit={onApplyReplace}
@@ -23,7 +23,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
         <input
           type="text"
           name="replacePrompt"
-          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Artículo a Reemplazar"
           required
         />
@@ -31,7 +31,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
         <input
           type="text"
           name="insertPrompt"
-          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Artículo para Insertar"
           required
         />
@@ -60,7 +60,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
         <input
           type="text"
           name="backgroundPrompt"
-          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="fondo Halloween"
           required
         />

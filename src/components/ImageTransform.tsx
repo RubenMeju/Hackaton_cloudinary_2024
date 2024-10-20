@@ -8,9 +8,9 @@ const ImageTransform: React.FC<ImageTransformProps> = ({
   transformedUrl,
 }) => {
   return (
-    <div className="flex gap-x-10">
+    <div className="max-w-2xl m-auto flex justify-between bg-red-500">
       {originalUrl && (
-        <div className="m-auto">
+        <div>
           <h3>Imagen Original</h3>
           <img src={originalUrl} alt="Original" style={{ width: "300px" }} />
         </div>
