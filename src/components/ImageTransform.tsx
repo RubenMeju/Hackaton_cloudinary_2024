@@ -8,7 +8,7 @@ const ImageTransform: React.FC<ImageTransformProps> = ({
   transformedUrl,
 }) => {
   return (
-    <div className="max-w-2xl m-auto flex justify-between bg-red-500">
+    <div className="max-w-2xl m-auto flex justify-between">
       {originalUrl && (
         <div>
           <h3>Imagen Original</h3>

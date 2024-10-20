@@ -70,7 +70,7 @@ export const applyGenerativeReplace = (
   console.log("applyGenerativeReplace");
   const transformedImage = cld
     .image(publicId)
-    .effect(generativeReplace().from(from).to(to));
+    .effect(generativeReplace().from(from).to(to).preserveGeometry(true));
   return transformedImage.toURL();
 };
 
