@@ -15,12 +15,15 @@ const FormGroup: React.FC<FormGroupProps> = ({
   isLoading,
 }) => {
   return (
-    <div className="flex gap-10">
-      <form className="border-2 rounded-md p-4" onSubmit={onApplyReplace}>
+    <div className="py-8 flex flex-col gap-10">
+      <form
+        className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
+        onSubmit={onApplyReplace}
+      >
         <input
           type="text"
           name="replacePrompt"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Artículo a Reemplazar"
           required
         />
@@ -28,22 +31,22 @@ const FormGroup: React.FC<FormGroupProps> = ({
         <input
           type="text"
           name="insertPrompt"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Artículo para Insertar"
           required
         />
         <button
           type="submit"
-          className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+          className="bg-black/70 py-4 px-8 border border-gray-300 rounded-md"
           disabled={isLoading}
         >
-          Aplicar Disfraz de Halloween
+          Reemplazar artículos
         </button>
       </form>
 
       <button
         type="button"
-        className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+        className="bg-black/70 py-4 px-8 border border-gray-300 rounded-md"
         onClick={onApplyRemove}
         disabled={isLoading}
       >
@@ -51,22 +54,22 @@ const FormGroup: React.FC<FormGroupProps> = ({
       </button>
 
       <form
-        className="border-2 rounded-md p-4"
+        className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
         onSubmit={onApplyRemoveBackground}
       >
         <input
           type="text"
           name="backgroundPrompt"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          className="bg-black/70 border border-red-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="fondo Halloween"
           required
         />
         <button
           type="submit"
-          className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+          className="bg-black/70 py-4 px-8 border border-gray-300 rounded-md"
           disabled={isLoading}
         >
-          Cambiar background
+          Reemplazar background
         </button>
       </form>
     </div>

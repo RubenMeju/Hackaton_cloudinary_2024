@@ -65,14 +65,14 @@ export default function App() {
         }`}
       ></div>
       <Fog />
-      <div className="z-10 text-center">
-        <h1 className="text-6xl font-bold mb-4 text-red-600 animate-pulse">
+      <div className="w-[90%] z-10 text-center">
+        <h1 className="text-6xl font-bold py-4 text-red-600 animate-pulse">
           Hackaton Cloudinary
         </h1>
-        <p className="text-2xl mb-8">
+        <p className="text-2xl mb-4">
           Convierte tus imágenes en aterradoras creaciones
         </p>
-        <div className="flex justify-center space-x-4">
+        <div className="">
           <ImageUpload onUpload={handleImageUpload} />
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           {isLoading && <Loading />} {/* Loader */}
