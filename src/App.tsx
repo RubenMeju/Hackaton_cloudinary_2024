@@ -60,7 +60,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center  relative overflow-hidden">
       <div
         className={`absolute inset-0 bg-purple-900 opacity-5 ${
           showLightning ? "animate-flash" : ""
@@ -68,9 +68,9 @@ export default function App() {
       ></div>
       <Fog />
 
-      <div className="w-[90%] z-10 text-center">
+      <div className="w-[90%] z-10">
         <Header />
-        <div className="w-full h-32 max-w-md flex">
+        <div className="max-w-md flex justify-center">
           <ImageExampleGallery />
           <ImageUpload onUpload={handleImageUpload} />
         </div>
