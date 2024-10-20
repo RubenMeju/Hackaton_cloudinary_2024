@@ -15,9 +15,20 @@ export default function App() {
     applyTransformationRemoveBackground,
   } = useCloudinaryUpload();
 
-  const handleApplyReplace = () => {
+  const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.target as HTMLFormElement;
+    const replacePrompt = (
+      form.elements.namedItem("replacePrompt") as HTMLInputElement
+    ).value;
+
+    const insertPrompt = (
+      form.elements.namedItem("insertPrompt") as HTMLInputElement
+    ).value;
+
     if (imageUrl) {
-      applyTransformationReplace("face", "Mayan mask");
+      applyTransformationReplace(replacePrompt, insertPrompt);
     }
   };
 
@@ -51,14 +62,34 @@ export default function App() {
       <ImageTransform originalUrl={imageUrl} transformedUrl={transformedUrl} />
       {imageUrl && (
         <div className="flex gap-10">
-          <button
-            type="button"
-            className="bg-gray-400 py-4 px-8 border border-white rounded-md"
-            onClick={handleApplyReplace}
-            disabled={isLoading} // Deshabilitar botones mientras carga
+          <form
+            className="border-2 rounded-md p-4"
+            onSubmit={handleApplyReplace}
           >
-            Aplicar Disfraz de Halloween
-          </button>
+            <input
+              type="text"
+              name="replacePrompt"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Artículo a Reemplazar"
+              required
+            />
+
+            <input
+              type="text"
+              name="insertPrompt"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Artículo para Insertar"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+              disabled={isLoading} // Deshabilitar botones mientras carga
+            >
+              Aplicar Disfraz de Halloween
+            </button>
+          </form>
+
           <button
             type="button"
             className="bg-gray-400 py-4 px-8 border border-white rounded-md"
@@ -68,7 +99,10 @@ export default function App() {
             Eliminar Objeto (Ej: Mesa)
           </button>
 
-          <form onSubmit={handleApplyRemoveBackground}>
+          <form
+            className="border-2 rounded-md p-4"
+            onSubmit={handleApplyRemoveBackground}
+          >
             <input
               type="text"
               name="backgroundPrompt"
