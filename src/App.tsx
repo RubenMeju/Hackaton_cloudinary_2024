@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import ImageTransform from "./components/ImageTransform";
 import ImageUpload from "./components/ImageUpload";
 import { useCloudinaryUpload } from "./hooks/useCloudinaryUpload";
@@ -7,6 +6,8 @@ import Bat from "./components/Bat";
 import Spider from "./components/Spider";
 import Fog from "./components/Fog";
 import Loading from "./components/Loading";
+import FormGroup from "./components/FormGroup"; // Importar el nuevo componente
+import { useLightningEffect } from "./hooks/useLightningEffect"; // Importar el hook
 
 export default function App() {
   const {
@@ -20,20 +21,10 @@ export default function App() {
     applyTransformationRemoveBackground,
   } = useCloudinaryUpload();
 
-  const [showLightning, setShowLightning] = useState(false);
-
-  useEffect(() => {
-    const lightningInterval = setInterval(() => {
-      setShowLightning(true);
-      setTimeout(() => setShowLightning(false), 200);
-    }, 5000 + Math.random() * 10000);
-
-    return () => clearInterval(lightningInterval);
-  }, []);
+  const showLightning = useLightningEffect(5000); // Usar el nuevo hook
 
   const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const form = e.target as HTMLFormElement;
     const replacePrompt = (
       form.elements.namedItem("replacePrompt") as HTMLInputElement
@@ -56,7 +47,6 @@ export default function App() {
 
   const handleApplyRemoveBackground = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const form = e.target as HTMLFormElement;
     const backgroundPrompt = (
       form.elements.namedItem("backgroundPrompt") as HTMLInputElement
@@ -84,71 +74,19 @@ export default function App() {
         </p>
         <div className="flex justify-center space-x-4">
           <ImageUpload onUpload={handleImageUpload} />
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           {isLoading && <Loading />} {/* Loader */}
           <ImageTransform
             originalUrl={imageUrl}
             transformedUrl={transformedUrl}
           />
           {imageUrl && (
-            <div className="flex gap-10">
-              <form
-                className="border-2 rounded-md p-4"
-                onSubmit={handleApplyReplace}
-              >
-                <input
-                  type="text"
-                  name="replacePrompt"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Artículo a Reemplazar"
-                  required
-                />
-
-                <input
-                  type="text"
-                  name="insertPrompt"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Artículo para Insertar"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-gray-400 py-4 px-8 border border-white rounded-md"
-                  disabled={isLoading} // Deshabilitar botones mientras carga
-                >
-                  Aplicar Disfraz de Halloween
-                </button>
-              </form>
-
-              <button
-                type="button"
-                className="bg-gray-400 py-4 px-8 border border-white rounded-md"
-                onClick={handleApplyRemove}
-                disabled={isLoading} // Deshabilitar botones mientras carga
-              >
-                Eliminar Objeto (Ej: Mesa)
-              </button>
-
-              <form
-                className="border-2 rounded-md p-4"
-                onSubmit={handleApplyRemoveBackground}
-              >
-                <input
-                  type="text"
-                  name="backgroundPrompt"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="fondo Halloween"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="bg-gray-400 py-4 px-8 border border-white rounded-md"
-                  disabled={isLoading} // Deshabilitar botones mientras carga
-                >
-                  Cambiar background
-                </button>
-              </form>
-            </div>
+            <FormGroup
+              onApplyReplace={handleApplyReplace}
+              onApplyRemove={handleApplyRemove}
+              onApplyRemoveBackground={handleApplyRemoveBackground}
+              isLoading={isLoading}
+            />
           )}
         </div>
       </div>
