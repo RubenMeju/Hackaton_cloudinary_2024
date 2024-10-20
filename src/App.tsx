@@ -27,9 +27,16 @@ export default function App() {
     }
   };
 
-  const handleApplyRemoveBackground = () => {
+  const handleApplyRemoveBackground = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.target as HTMLFormElement;
+    const backgroundPrompt = (
+      form.elements.namedItem("backgroundPrompt") as HTMLInputElement
+    ).value;
+
     if (imageUrl) {
-      applyTransformationRemoveBackground("party Halloween");
+      applyTransformationRemoveBackground(backgroundPrompt);
     }
   };
 
@@ -61,14 +68,22 @@ export default function App() {
             Eliminar Objeto (Ej: Mesa)
           </button>
 
-          <button
-            type="button"
-            className="bg-gray-400 py-4 px-8 border border-white rounded-md"
-            onClick={handleApplyRemoveBackground}
-            disabled={isLoading} // Deshabilitar botones mientras carga
-          >
-            Cambiar background
-          </button>
+          <form onSubmit={handleApplyRemoveBackground}>
+            <input
+              type="text"
+              name="backgroundPrompt"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="fondo Halloween"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-gray-400 py-4 px-8 border border-white rounded-md"
+              disabled={isLoading} // Deshabilitar botones mientras carga
+            >
+              Cambiar background
+            </button>
+          </form>
         </div>
       )}
     </div>
