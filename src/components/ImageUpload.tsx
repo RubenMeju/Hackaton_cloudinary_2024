@@ -13,7 +13,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="max-w-2xl m-auto mb-4">
       <label
         htmlFor="imageUpload"
         className="flex items-center justify-center w-full h-32 px-4 border-2 border-purple-800 border-dashed rounded-lg cursor-pointer hover:bg-gray-800 transition duration-300"
