@@ -1,9 +1,11 @@
 export default function ImageExampleGallery() {
   return (
-    <img
-      src="https://res.cloudinary.com/meju/image/upload/c_thumb,w_200,g_face/v1729449267/zlnmn8wiblyolg6fscyj.webp"
-      className="w-20 h-20"
-      alt="Imagen de prueba"
-    />
+    <div>
+      <img
+        src="https://res.cloudinary.com/meju/image/upload/e_improve,w_300,h_600,c_thumb,g_auto/v1729449267/zlnmn8wiblyolg6fscyj.webp"
+        className=" h-full"
+        alt="Imagen de prueba"
+      />
+    </div>
   );
 }

@@ -1,6 +1,3 @@
-// FormGroup.tsx
-import React from "react";
-
 interface FormGroupProps {
   onApplyReplace: (e: React.FormEvent<HTMLFormElement>) => void;
   onApplyRemove: () => void;
@@ -15,7 +12,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
   isLoading,
 }) => {
   return (
-    <div className="max-w-2xl m-auto py-8 flex flex-col gap-10">
+    <div className="max-w-2xl m-auto py-8 flex flex-col gap-10 bg-blue-950">
       <form
         className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
         onSubmit={onApplyReplace}
