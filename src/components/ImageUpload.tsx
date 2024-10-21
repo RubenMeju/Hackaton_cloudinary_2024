@@ -1,3 +1,4 @@
+import { Camera } from "lucide-react";
 import React from "react";
 
 interface ImageUploadProps {
@@ -23,7 +24,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
             Sube una imagen
           </span>
           <span className="mt-1 text-sm text-gray-400">Sera terroficio</span>
-          <span className="text-3xl">🎃</span>
+
+          <Camera className="mx-auto h-10 w-10 text-gray-400" />
         </div>
         <input
           id="imageUpload"
