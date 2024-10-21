@@ -11,12 +11,24 @@ import { useLightningEffect } from "./hooks/useLightningEffect";
 import ImageExampleGallery from "./components/ImageExampleGallery";
 import Header from "./components/Header";
 import useStore from "./store/store";
+import CostumeSelector from "./components/CustomeSelector";
+import { Ghost, Skull, Flame, Shield } from "lucide-react";
+import { useState } from "react";
+
+const costumes = [
+  { id: "zombie", name: "Zombie", icon: Skull },
+  { id: "ghost", name: "Ghost", icon: Ghost },
+  { id: "devil", name: "Devil", icon: Flame },
+  { id: "police", name: "Police", icon: Shield },
+];
 
 export default function App() {
   const { errorMessage, isLoading } = useStore();
   const { handleImageUpload } = useCloudinaryUpload();
 
   const showLightning = useLightningEffect(5000);
+
+  const [selectedCostume, setSelectedCostume] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center relative overflow-hidden">
@@ -38,6 +50,12 @@ export default function App() {
             <ImageExampleGallery />
             <ImageUpload onUpload={handleImageUpload} />
           </div>
+          <CostumeSelector
+            costumes={costumes}
+            selectedCostume={selectedCostume}
+            setSelectedCostume={setSelectedCostume}
+          />
+
           <FormGroup />
         </div>
 
