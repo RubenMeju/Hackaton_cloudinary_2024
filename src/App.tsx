@@ -13,7 +13,7 @@ import Header from "./components/Header";
 import useStore from "./store/store";
 
 export default function App() {
-  const { imageUrl, errorMessage, isLoading } = useStore();
+  const { errorMessage, isLoading } = useStore();
   const { handleImageUpload } = useCloudinaryUpload();
 
   const showLightning = useLightningEffect(5000);
@@ -26,17 +26,24 @@ export default function App() {
         }`}
       ></div>
       <Fog />
-      <div className="w-[90%] z-10">
+
+      <section className="w-[90%] z-10 flex flex-col gap-8">
         <Header />
-        <div className="max-w-md flex justify-center">
-          <ImageExampleGallery />
-          <ImageUpload onUpload={handleImageUpload} />
-        </div>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
         {isLoading && <Loading />}
+
+        <div>
+          <div className="max-w-md flex justify-center bg-violet-700">
+            <ImageExampleGallery />
+            <ImageUpload onUpload={handleImageUpload} />
+          </div>
+          <FormGroup />
+        </div>
+
         <ImageTransform />
-        {imageUrl && <FormGroup />}
-      </div>
+      </section>
+
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(5)].map((_, i) => (
           <Bat key={`bat-${i}`} />

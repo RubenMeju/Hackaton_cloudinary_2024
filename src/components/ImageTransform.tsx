@@ -8,24 +8,24 @@ const ImageTransform = () => {
   const { imageUrl, transformedUrl } = useStore();
 
   if (!imageUrl || !transformedUrl) {
-    return null; // Si no hay imágenes, no renderiza nada.
+    return null;
   }
 
   return (
-    <div className="max-w-2xl m-auto flex justify-center">
+    <div className="max-w-sm m-auto flex justify-center bg-orange-600">
       <ReactCompareSlider
         itemOne={
           <ReactCompareSliderImage
             src={imageUrl}
             alt="Original Image"
-            style={{ maxWidth: "300px", height: "auto" }} // Limitar tamaño de la imagen
+            style={{ maxWidth: "300px", height: "auto" }}
           />
         }
         itemTwo={
           <ReactCompareSliderImage
             src={transformedUrl}
             alt="Transformed Image"
-            style={{ maxWidth: "300px", height: "auto" }} // Limitar tamaño de la imagen
+            style={{ maxWidth: "300px", height: "auto" }}
           />
         }
       />
