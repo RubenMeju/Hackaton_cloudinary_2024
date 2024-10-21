@@ -17,9 +17,9 @@ import { useState } from "react";
 
 const costumes = [
   { id: "zombie", name: "Zombie", icon: Skull },
-  { id: "ghost", name: "Ghost", icon: Ghost },
-  { id: "devil", name: "Devil", icon: Flame },
-  { id: "police", name: "Police", icon: Shield },
+  { id: "ghost", name: "Fantasma", icon: Ghost },
+  { id: "devil", name: "Diablo", icon: Flame },
+  { id: "police", name: "Policia", icon: Shield },
 ];
 
 export default function App() {
@@ -37,7 +37,6 @@ export default function App() {
           showLightning ? "animate-flash" : ""
         }`}
       ></div>
-      <Fog />
 
       <section className="w-[90%] z-10 flex flex-col gap-8">
         <Header />
