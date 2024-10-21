@@ -5,8 +5,8 @@ import {
   generativeBackgroundReplace,
 } from "@cloudinary/url-gen/actions/effect";
 
-const CLOUD_NAME = "meju";
-const UPLOAD_PRESET = "espejo_hachaton";
+const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
+const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
 
 interface CustomError extends Error {
   http_code?: number;
