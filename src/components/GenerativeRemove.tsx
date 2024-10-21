@@ -17,7 +17,7 @@ export default function GenerativeRemove() {
   };
   return (
     <form
-      className="max-w-xl flex flex-col gap-4 mb-10"
+      className="w-full max-w-xl m-auto flex flex-col gap-4 mb-10"
       onSubmit={handleApplyReplace}
     >
       <h2 className="text-2xl font-bold">Elimina un objecto</h2>

@@ -42,18 +42,24 @@ export default function App() {
         <Header />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         {isLoading && <Loading />}
-        <div className="max-w-md flex justify-center">
+
+        <div className="max-w-md m-auto flex justify-center gap-8">
           <ImageExampleGallery />
           <ImageUpload onUpload={handleImageUpload} />
         </div>
-        <ImageTransform />
-        <CostumeSelector
-          costumes={costumes}
-          selectedCostume={selectedCostume}
-          setSelectedCostume={setSelectedCostume}
-        />
-        <BackgroundRemove />
-        <GenerativeRemove />
+        <div className="w-full xl:w-[60%] m-auto xl:flex justify-between ">
+          <ImageTransform />
+
+          <div className="w-full flex flex-col gap-8">
+            <CostumeSelector
+              costumes={costumes}
+              selectedCostume={selectedCostume}
+              setSelectedCostume={setSelectedCostume}
+            />
+            <BackgroundRemove />
+            <GenerativeRemove />
+          </div>
+        </div>
       </section>
 
       <div className="absolute inset-0 pointer-events-none">

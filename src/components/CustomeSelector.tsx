@@ -70,7 +70,7 @@ const CostumeSelector: React.FC<CostumeSelectorProps> = ({
   };
 
   return (
-    <div className="max-w-xl">
+    <div className="w-full max-w-xl m-auto">
       <h2 className="text-2xl font-bold mb-4">Escoge un disfraz</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         {costumes.map((costume) => (

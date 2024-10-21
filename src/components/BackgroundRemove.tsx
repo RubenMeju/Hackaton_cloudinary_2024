@@ -46,7 +46,10 @@ const BackgroundRemove = () => {
   };
 
   return (
-    <form className="max-w-xl" onSubmit={handleApplyRemoveBackground}>
+    <form
+      className="w-full max-w-xl m-auto"
+      onSubmit={handleApplyRemoveBackground}
+    >
       <h2 className="text-2xl font-bold mb-4">Escoge un fondo</h2>
       <select
         value={selectedBackground}

@@ -18,14 +18,14 @@ const ImageTransform = () => {
           <ReactCompareSliderImage
             src={imageUrl}
             alt="Original Image"
-            style={{ maxWidth: "300px", height: "auto" }}
+            style={{ maxWidth: "900px", height: "auto" }}
           />
         }
         itemTwo={
           <ReactCompareSliderImage
             src={transformedUrl}
             alt="Transformed Image"
-            style={{ maxWidth: "300px", height: "auto" }}
+            style={{ maxWidth: "900px", height: "auto" }}
           />
         }
       />
