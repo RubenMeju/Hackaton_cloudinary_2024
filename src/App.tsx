@@ -46,10 +46,13 @@ export default function App() {
         {isLoading && <Loading />}
 
         <div>
-          <div className="max-w-md flex justify-center bg-violet-700">
+          <div className="max-w-md flex justify-center">
             <ImageExampleGallery />
             <ImageUpload onUpload={handleImageUpload} />
           </div>
+
+          <ImageTransform />
+
           <CostumeSelector
             costumes={costumes}
             selectedCostume={selectedCostume}
@@ -58,8 +61,6 @@ export default function App() {
 
           <FormGroup />
         </div>
-
-        <ImageTransform />
       </section>
 
       <div className="absolute inset-0 pointer-events-none">

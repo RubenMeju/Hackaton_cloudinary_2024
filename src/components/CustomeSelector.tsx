@@ -18,7 +18,6 @@ interface CostumeSelectorProps {
 const CostumeSelector: React.FC<CostumeSelectorProps> = ({
   costumes,
   selectedCostume,
-  setSelectedCostume,
 }) => {
   const { imageUrl, isLoading } = useStore();
   const { applyTransformationReplace } = useCloudinaryUpload();
@@ -29,17 +28,22 @@ const CostumeSelector: React.FC<CostumeSelectorProps> = ({
 
   // Manejador para seleccionar un disfraz
   const handleCostumeSelection = (costume: Costume) => {
-    setSelectedCostume(costume.id); // Actualiza el disfraz seleccionado
-    // Rellena automáticamente los valores de replacePrompt e insertPrompt
     if (costume.id === "zombie") {
-      setReplacePrompt("ropa");
+      console.log("elegiste disfraz zombie");
+      setReplacePrompt("clothes");
       setInsertPrompt("disfraz zombie");
-    } else if (costume.name === "diablo") {
-      setReplacePrompt("ropa");
+    } else if (costume.id === "devil") {
+      console.log("elegiste disfraz diablo");
+      setReplacePrompt("clothes");
       setInsertPrompt("disfraz diablo");
-    } else if (costume.name === "vaca") {
-      setReplacePrompt("ropa");
-      setInsertPrompt("disfraz vaca");
+    } else if (costume.id === "ghost") {
+      console.log("elegiste disfraz ghost");
+      setReplacePrompt("clothes");
+      setInsertPrompt("custome ghost");
+    } else if (costume.id === "police") {
+      console.log("elegiste disfraz police");
+      setReplacePrompt("clothes");
+      setInsertPrompt("disfraz policia");
     } else {
       setReplacePrompt("");
       setInsertPrompt("");
@@ -55,7 +59,7 @@ const CostumeSelector: React.FC<CostumeSelectorProps> = ({
   };
 
   return (
-    <div>
+    <div className="max-w-xl">
       <h2 className="text-2xl font-bold mb-4">Choose a Costume</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         {costumes.map((costume) => (
