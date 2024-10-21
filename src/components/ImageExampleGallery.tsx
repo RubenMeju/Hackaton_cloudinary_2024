@@ -1,11 +1,8 @@
+import useStore from "../store/store";
+
 interface ImageData {
   url: string;
   publicId: string;
-}
-
-interface ImageExampleGalleryProps {
-  setImageUrl: (url: string) => void;
-  setCurrentPublicId: (publicId: string) => void;
 }
 
 const images: ImageData[] = [
@@ -19,10 +16,8 @@ const images: ImageData[] = [
   },
 ];
 
-const ImageExampleGallery: React.FC<ImageExampleGalleryProps> = ({
-  setImageUrl,
-  setCurrentPublicId,
-}) => {
+const ImageExampleGallery = () => {
+  const { setImageUrl, setCurrentPublicId } = useStore();
   const handleClick = (url: string, publicId: string) => {
     setImageUrl(url);
     setCurrentPublicId(publicId);

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
+import useStore from "../store/store";
 
 interface FormGroupProps {
   onApplyReplace: (e: React.FormEvent<HTMLFormElement>) => void;
   onApplyRemove: () => void;
   onApplyRemoveBackground: (e: React.FormEvent<HTMLFormElement>) => void;
-  isLoading: boolean;
 }
 
 const FormGroup: React.FC<FormGroupProps> = ({
   onApplyReplace,
   onApplyRemove,
   onApplyRemoveBackground,
-  isLoading,
 }) => {
+  const { isLoading } = useStore();
+
   // Estado para controlar cuál formulario se está mostrando
   const [activeForm, setActiveForm] = useState<string>("replace");
 

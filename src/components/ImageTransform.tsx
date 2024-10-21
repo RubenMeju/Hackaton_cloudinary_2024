@@ -1,19 +1,13 @@
-import React from "react";
 import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
+import useStore from "../store/store";
 
-interface ImageTransformProps {
-  originalUrl: string | null;
-  transformedUrl: string | null;
-}
+const ImageTransform = () => {
+  const { imageUrl, transformedUrl } = useStore();
 
-const ImageTransform: React.FC<ImageTransformProps> = ({
-  originalUrl,
-  transformedUrl,
-}) => {
-  if (!originalUrl || !transformedUrl) {
+  if (!imageUrl || !transformedUrl) {
     return null; // Si no hay imágenes, no renderiza nada.
   }
 
@@ -22,7 +16,7 @@ const ImageTransform: React.FC<ImageTransformProps> = ({
       <ReactCompareSlider
         itemOne={
           <ReactCompareSliderImage
-            src={originalUrl}
+            src={imageUrl}
             alt="Original Image"
             style={{ maxWidth: "300px", height: "auto" }} // Limitar tamaño de la imagen
           />

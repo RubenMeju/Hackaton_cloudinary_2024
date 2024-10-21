@@ -1,30 +1,27 @@
-import { useState } from "react";
 import {
-  uploadImage,
-  applyGenerativeReplace,
-  applyGenerativeRemove,
   applyGenerativeBackgroundReplace,
-  uploadTransformedImage, // Nueva función para guardar la imagen transformada
+  applyGenerativeRemove,
+  applyGenerativeReplace,
+  uploadImage,
+  uploadTransformedImage,
 } from "../services/cloudinaryService";
+import useStore from "../store/store";
 
-// Función auxiliar para extraer el publicId correctamente eliminando cualquier parámetro de consulta
+// Función auxiliar para extraer el publicId
 const extractPublicId = (url: string): string => {
   const [publicId] = url.split("?")[0].split("/").pop()?.split(".") || [];
   return publicId;
 };
 
-const urlFirstImg =
-  "https://res.cloudinary.com/meju/image/upload/v1729496628/fa7dds8gna7dfwhqebil.jpg";
 export const useCloudinaryUpload = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(urlFirstImg);
-  const [transformedUrl, setTransformedUrl] = useState<string | null>(
-    urlFirstImg
-  );
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [currentPublicId, setCurrentPublicId] = useState<string | null>(
-    "fa7dds8gna7dfwhqebil"
-  );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    currentPublicId,
+    setImageUrl,
+    setTransformedUrl,
+    setCurrentPublicId,
+    setErrorMessage,
+    setIsLoading,
+  } = useStore();
 
   // Subir imagen
   const handleImageUpload = async (file: File) => {
@@ -34,10 +31,9 @@ export const useCloudinaryUpload = () => {
       setImageUrl(uploadedUrl);
       setErrorMessage(null);
 
-      // Extrae el public_id de la URL
+      // Extrae el publicId de la URL
       const publicId = extractPublicId(uploadedUrl);
-
-      setCurrentPublicId(publicId); // Guardamos el publicId inicial de la imagen subida
+      setCurrentPublicId(publicId);
     } catch (error) {
       setErrorMessage(error.message);
     } finally {
@@ -126,12 +122,6 @@ export const useCloudinaryUpload = () => {
   };
 
   return {
-    imageUrl,
-    setImageUrl,
-    setCurrentPublicId,
-    transformedUrl,
-    errorMessage,
-    isLoading,
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,

@@ -6,28 +6,23 @@ import Bat from "./components/Bat";
 import Spider from "./components/Spider";
 import Fog from "./components/Fog";
 import Loading from "./components/Loading";
-import FormGroup from "./components/FormGroup"; // Importar el nuevo componente
-import { useLightningEffect } from "./hooks/useLightningEffect"; // Importar el hook
+import FormGroup from "./components/FormGroup";
+import { useLightningEffect } from "./hooks/useLightningEffect";
 import ImageExampleGallery from "./components/ImageExampleGallery";
 import Header from "./components/Header";
+import useStore from "./store/store";
 
 export default function App() {
+  const { imageUrl, errorMessage, isLoading } = useStore();
   const {
-    imageUrl,
-    transformedUrl,
-    errorMessage,
-    isLoading,
     handleImageUpload,
     applyTransformationReplace,
     applyTransformationRemove,
     applyTransformationRemoveBackground,
-    setImageUrl,
-    setCurrentPublicId,
   } = useCloudinaryUpload();
 
-  const showLightning = useLightningEffect(5000); // Usar el nuevo hook
+  const showLightning = useLightningEffect(5000);
 
-  // Manejar transformación de imagen
   const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -69,32 +64,23 @@ export default function App() {
         }`}
       ></div>
       <Fog />
-
       <div className="w-[90%] z-10">
         <Header />
         <div className="max-w-md flex justify-center">
-          <ImageExampleGallery
-            setImageUrl={setImageUrl}
-            setCurrentPublicId={setCurrentPublicId}
-          />
+          <ImageExampleGallery />
           <ImageUpload onUpload={handleImageUpload} />
         </div>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        {isLoading && <Loading />} {/* Loader */}
-        <ImageTransform
-          originalUrl={imageUrl}
-          transformedUrl={transformedUrl}
-        />
+        {isLoading && <Loading />}
+        <ImageTransform />
         {imageUrl && (
           <FormGroup
             onApplyReplace={handleApplyReplace}
             onApplyRemove={handleApplyRemove}
             onApplyRemoveBackground={handleApplyRemoveBackground}
-            isLoading={isLoading}
           />
         )}
       </div>
-
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(5)].map((_, i) => (
           <Bat key={`bat-${i}`} />
