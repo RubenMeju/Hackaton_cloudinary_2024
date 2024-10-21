@@ -14,47 +14,9 @@ import useStore from "./store/store";
 
 export default function App() {
   const { imageUrl, errorMessage, isLoading } = useStore();
-  const {
-    handleImageUpload,
-    applyTransformationReplace,
-    applyTransformationRemove,
-    applyTransformationRemoveBackground,
-  } = useCloudinaryUpload();
+  const { handleImageUpload } = useCloudinaryUpload();
 
   const showLightning = useLightningEffect(5000);
-
-  const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const replacePrompt = (
-      form.elements.namedItem("replacePrompt") as HTMLInputElement
-    ).value;
-    const insertPrompt = (
-      form.elements.namedItem("insertPrompt") as HTMLInputElement
-    ).value;
-
-    if (imageUrl) {
-      applyTransformationReplace(replacePrompt, insertPrompt);
-    }
-  };
-
-  const handleApplyRemove = () => {
-    if (imageUrl) {
-      applyTransformationRemove("cap");
-    }
-  };
-
-  const handleApplyRemoveBackground = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const backgroundPrompt = (
-      form.elements.namedItem("backgroundPrompt") as HTMLInputElement
-    ).value;
-
-    if (imageUrl) {
-      applyTransformationRemoveBackground(backgroundPrompt);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center relative overflow-hidden">
@@ -73,13 +35,7 @@ export default function App() {
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         {isLoading && <Loading />}
         <ImageTransform />
-        {imageUrl && (
-          <FormGroup
-            onApplyReplace={handleApplyReplace}
-            onApplyRemove={handleApplyRemove}
-            onApplyRemoveBackground={handleApplyRemoveBackground}
-          />
-        )}
+        {imageUrl && <FormGroup />}
       </div>
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(5)].map((_, i) => (

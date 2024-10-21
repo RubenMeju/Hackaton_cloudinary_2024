@@ -1,22 +1,49 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useStore from "../store/store";
+import { useCloudinaryUpload } from "../hooks/useCloudinaryUpload";
 
-interface FormGroupProps {
-  onApplyReplace: (e: React.FormEvent<HTMLFormElement>) => void;
-  onApplyRemove: () => void;
-  onApplyRemoveBackground: (e: React.FormEvent<HTMLFormElement>) => void;
-}
-
-const FormGroup: React.FC<FormGroupProps> = ({
-  onApplyReplace,
-  onApplyRemove,
-  onApplyRemoveBackground,
-}) => {
-  const { isLoading } = useStore();
-
+const FormGroup = () => {
+  const { imageUrl, isLoading } = useStore();
+  const {
+    applyTransformationReplace,
+    applyTransformationRemove,
+    applyTransformationRemoveBackground,
+  } = useCloudinaryUpload();
   // Estado para controlar cuál formulario se está mostrando
   const [activeForm, setActiveForm] = useState<string>("replace");
 
+  const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const replacePrompt = (
+      form.elements.namedItem("replacePrompt") as HTMLInputElement
+    ).value;
+    const insertPrompt = (
+      form.elements.namedItem("insertPrompt") as HTMLInputElement
+    ).value;
+
+    if (imageUrl) {
+      applyTransformationReplace(replacePrompt, insertPrompt);
+    }
+  };
+
+  const handleApplyRemove = () => {
+    if (imageUrl) {
+      applyTransformationRemove("cap");
+    }
+  };
+
+  const handleApplyRemoveBackground = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const backgroundPrompt = (
+      form.elements.namedItem("backgroundPrompt") as HTMLInputElement
+    ).value;
+
+    if (imageUrl) {
+      applyTransformationRemoveBackground(backgroundPrompt);
+    }
+  };
   return (
     <div className="max-w-2xl m-auto h-56 py-8 flex flex-col gap-4 ">
       {/* Botones para cambiar de formulario */}
@@ -54,7 +81,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
       {activeForm === "replace" && (
         <form
           className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
-          onSubmit={onApplyReplace}
+          onSubmit={handleApplyReplace}
         >
           <h2>Reemplazo generativo</h2>
           <input
@@ -87,7 +114,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
           <button
             type="button"
             className="bg-black/70 py-4 px-8 border border-gray-300 rounded-md"
-            onClick={onApplyRemove}
+            onClick={handleApplyRemove}
             disabled={isLoading}
           >
             Eliminar Objeto (Ej: Mesa)
@@ -99,7 +126,7 @@ const FormGroup: React.FC<FormGroupProps> = ({
       {activeForm === "background" && (
         <form
           className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
-          onSubmit={onApplyRemoveBackground}
+          onSubmit={handleApplyRemoveBackground}
         >
           <h2>Reemplazar fondo</h2>
           <input
