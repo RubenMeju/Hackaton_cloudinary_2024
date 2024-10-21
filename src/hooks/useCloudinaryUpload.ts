@@ -14,15 +14,15 @@ const extractPublicId = (url: string): string => {
 };
 
 const urlFirstImg =
-  "https://res.cloudinary.com/meju/image/upload/v1729449267/zlnmn8wiblyolg6fscyj.webp";
+  "https://res.cloudinary.com/meju/image/upload/v1729496628/fa7dds8gna7dfwhqebil.jpg";
 export const useCloudinaryUpload = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(urlFirstImg);
   const [transformedUrl, setTransformedUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentPublicId, setCurrentPublicId] = useState<string | null>(
-    "zlnmn8wiblyolg6fscyj"
+    "fa7dds8gna7dfwhqebil"
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false); // Estado de carga
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Subir imagen
   const handleImageUpload = async (file: File) => {
@@ -34,9 +34,6 @@ export const useCloudinaryUpload = () => {
 
       // Extrae el public_id de la URL
       const publicId = extractPublicId(uploadedUrl);
-
-      console.log("uploadedUrl: ", uploadedUrl);
-      console.log("public_id: ", publicId);
 
       setCurrentPublicId(publicId); // Guardamos el publicId inicial de la imagen subida
     } catch (error) {
@@ -128,6 +125,8 @@ export const useCloudinaryUpload = () => {
 
   return {
     imageUrl,
+    setImageUrl,
+    setCurrentPublicId,
     transformedUrl,
     errorMessage,
     isLoading,

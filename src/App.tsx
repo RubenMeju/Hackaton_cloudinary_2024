@@ -21,17 +21,19 @@ export default function App() {
     applyTransformationReplace,
     applyTransformationRemove,
     applyTransformationRemoveBackground,
+    setImageUrl,
+    setCurrentPublicId,
   } = useCloudinaryUpload();
 
   const showLightning = useLightningEffect(5000); // Usar el nuevo hook
 
+  // Manejar transformación de imagen
   const handleApplyReplace = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const replacePrompt = (
       form.elements.namedItem("replacePrompt") as HTMLInputElement
     ).value;
-
     const insertPrompt = (
       form.elements.namedItem("insertPrompt") as HTMLInputElement
     ).value;
@@ -60,7 +62,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center  relative overflow-hidden">
+    <div className="min-h-screen bg-black text-gray-300 flex flex-col items-center relative overflow-hidden">
       <div
         className={`absolute inset-0 bg-purple-900 opacity-5 ${
           showLightning ? "animate-flash" : ""
@@ -71,7 +73,10 @@ export default function App() {
       <div className="w-[90%] z-10">
         <Header />
         <div className="max-w-md flex justify-center">
-          <ImageExampleGallery />
+          <ImageExampleGallery
+            setImageUrl={setImageUrl}
+            setCurrentPublicId={setCurrentPublicId}
+          />
           <ImageUpload onUpload={handleImageUpload} />
         </div>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
