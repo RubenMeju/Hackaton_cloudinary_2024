@@ -1,4 +1,4 @@
-import { Cloudinary } from "@cloudinary/url-gen";
+import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
 import {
   generativeReplace,
   generativeRemove,
@@ -7,6 +7,10 @@ import {
 
 const CLOUD_NAME = "meju";
 const UPLOAD_PRESET = "espejo_hachaton";
+
+interface CustomError extends Error {
+  http_code?: number;
+}
 
 const cld = new Cloudinary({
   cloud: {
@@ -91,15 +95,43 @@ export const applyGenerativeRemove = (publicId: string, inputPromt: string) => {
   return transformedImage.toURL();
 };
 
-// Aplicar cambio background
-export const applyGenerativeBackgroundReplace = (
+// Aplicar cambio de fondo
+// Aplicar cambio de fondo
+export const applyGenerativeBackgroundReplace = async (
   publicId: string,
-  inputPromt: string
-) => {
-  const transformedImage = cld
-    .image(publicId)
-    .effect(generativeBackgroundReplace().prompt(inputPromt));
+  inputPrompt: string,
+  retryCount: number = 0 // Contador para el número de reintentos
+): Promise<string> => {
+  // Tipo de retorno Promise<string> ya que devuelves una URL
+  try {
+    const transformedImage: CloudinaryImage = cld
+      .image(publicId)
+      .effect(generativeBackgroundReplace().prompt(inputPrompt));
 
-  // Devuelve la URL transformada
-  return transformedImage.toURL();
+    // Devuelve la URL transformada
+    return transformedImage.toURL();
+  } catch (error) {
+    // Asegúrate de que el error sea del tipo CustomError
+    const customError = error as CustomError;
+
+    // Manejo del error 423
+    if (customError.http_code === 423 && retryCount < 3) {
+      // Limitar a 3 reintentos
+      console.warn(
+        `Error 423: Resource is locked. Retrying... Attempt ${retryCount + 1}`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Esperar 2 segundos antes de reintentar
+      return applyGenerativeBackgroundReplace(
+        publicId,
+        inputPrompt,
+        retryCount + 1
+      );
+    } else {
+      console.error(
+        "Error applying generative background replace:",
+        customError
+      );
+      throw customError; // Re-lanzar el error si no es 423 o se han agotado los reintentos
+    }
+  }
 };

@@ -4,8 +4,7 @@ import { useCloudinaryUpload } from "../hooks/useCloudinaryUpload";
 
 const FormGroup = () => {
   const { imageUrl, isLoading } = useStore();
-  const { applyTransformationRemove, applyTransformationRemoveBackground } =
-    useCloudinaryUpload();
+  const { applyTransformationRemove } = useCloudinaryUpload();
 
   // Estado para controlar cuál formulario se está mostrando
   const [activeForm, setActiveForm] = useState<string>("replace");
@@ -13,18 +12,6 @@ const FormGroup = () => {
   const handleApplyRemove = () => {
     if (imageUrl) {
       applyTransformationRemove("cap");
-    }
-  };
-
-  const handleApplyRemoveBackground = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const backgroundPrompt = (
-      form.elements.namedItem("backgroundPrompt") as HTMLInputElement
-    ).value;
-
-    if (imageUrl) {
-      applyTransformationRemoveBackground(backgroundPrompt);
     }
   };
 
@@ -75,7 +62,7 @@ const FormGroup = () => {
         </form>
       )}
 
-      {/* Formulario de cambiar background */}
+      {/* Formulario de cambiar background 
       {activeForm === "background" && (
         <form
           className="flex flex-col gap-4 border-2 border-red-900 rounded-md p-4"
@@ -97,7 +84,7 @@ const FormGroup = () => {
             Reemplazar background
           </button>
         </form>
-      )}
+      )}*/}
     </div>
   );
 };

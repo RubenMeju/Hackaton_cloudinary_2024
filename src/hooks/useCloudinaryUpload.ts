@@ -100,19 +100,20 @@ export const useCloudinaryUpload = () => {
     if (currentPublicId) {
       setIsLoading(true);
       try {
+        // Aquí se llama a la función que ahora maneja los reintentos
         const transformedImageUrl = await applyGenerativeBackgroundReplace(
           currentPublicId,
           inputPrompt
         );
-        setTransformedUrl(transformedImageUrl);
 
-        // Subimos la imagen transformada para obtener un nuevo public_id
+        // Aquí guardas la imagen transformada para obtener un nuevo public_id
         const savedImageUrl = await uploadTransformedImage(transformedImageUrl);
         const newPublicId = extractPublicId(savedImageUrl);
 
         console.log("newPublicId after Background Replace: ", newPublicId);
 
         setCurrentPublicId(newPublicId);
+        setTransformedUrl(transformedImageUrl); // Mueve esta línea aquí para que se ejecute después de la subida
       } catch (error) {
         setErrorMessage(error.message);
       } finally {

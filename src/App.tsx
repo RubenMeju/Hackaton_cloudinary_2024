@@ -4,7 +4,6 @@ import { useCloudinaryUpload } from "./hooks/useCloudinaryUpload";
 import "./index.css";
 import Bat from "./components/Bat";
 import Spider from "./components/Spider";
-import Fog from "./components/Fog";
 import Loading from "./components/Loading";
 import FormGroup from "./components/FormGroup";
 import { useLightningEffect } from "./hooks/useLightningEffect";
@@ -14,6 +13,7 @@ import useStore from "./store/store";
 import CostumeSelector from "./components/CustomeSelector";
 import { Ghost, Skull, Flame, Shield } from "lucide-react";
 import { useState } from "react";
+import BackgroundRemove from "./components/BackgroundRemove";
 
 const costumes = [
   { id: "zombie", name: "Zombie", icon: Skull },
@@ -41,22 +41,18 @@ export default function App() {
       <section className="w-[90%] z-10 flex flex-col gap-10">
         <Header />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-
         {isLoading && <Loading />}
-
         <div className="max-w-md flex justify-center">
           <ImageExampleGallery />
           <ImageUpload onUpload={handleImageUpload} />
         </div>
-
         <ImageTransform />
-
         <CostumeSelector
           costumes={costumes}
           selectedCostume={selectedCostume}
           setSelectedCostume={setSelectedCostume}
         />
-
+        <BackgroundRemove />
         <FormGroup />
       </section>
 
