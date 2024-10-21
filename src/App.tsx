@@ -38,28 +38,26 @@ export default function App() {
         }`}
       ></div>
 
-      <section className="w-[90%] z-10 flex flex-col gap-8">
+      <section className="w-[90%] z-10 flex flex-col gap-10">
         <Header />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
         {isLoading && <Loading />}
 
-        <div>
-          <div className="max-w-md flex justify-center">
-            <ImageExampleGallery />
-            <ImageUpload onUpload={handleImageUpload} />
-          </div>
-
-          <ImageTransform />
-
-          <CostumeSelector
-            costumes={costumes}
-            selectedCostume={selectedCostume}
-            setSelectedCostume={setSelectedCostume}
-          />
-
-          <FormGroup />
+        <div className="max-w-md flex justify-center">
+          <ImageExampleGallery />
+          <ImageUpload onUpload={handleImageUpload} />
         </div>
+
+        <ImageTransform />
+
+        <CostumeSelector
+          costumes={costumes}
+          selectedCostume={selectedCostume}
+          setSelectedCostume={setSelectedCostume}
+        />
+
+        <FormGroup />
       </section>
 
       <div className="absolute inset-0 pointer-events-none">
