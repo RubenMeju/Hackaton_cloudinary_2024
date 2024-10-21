@@ -1,19 +1,19 @@
+import { Ghost, Skull, Flame, Shield } from "lucide-react";
+import { useState } from "react";
+import { useLightningEffect } from "./hooks/useLightningEffect";
+import { useCloudinaryUpload } from "./hooks/useCloudinaryUpload";
+import useStore from "./store/store";
+import Header from "./components/Header";
 import ImageTransform from "./components/ImageTransform";
 import ImageUpload from "./components/ImageUpload";
-import { useCloudinaryUpload } from "./hooks/useCloudinaryUpload";
-import "./index.css";
 import Bat from "./components/Bat";
 import Spider from "./components/Spider";
 import Loading from "./components/Loading";
-import FormGroup from "./components/FormGroup";
-import { useLightningEffect } from "./hooks/useLightningEffect";
 import ImageExampleGallery from "./components/ImageExampleGallery";
-import Header from "./components/Header";
-import useStore from "./store/store";
 import CostumeSelector from "./components/CustomeSelector";
-import { Ghost, Skull, Flame, Shield } from "lucide-react";
-import { useState } from "react";
 import BackgroundRemove from "./components/BackgroundRemove";
+import "./index.css";
+import GenerativeRemove from "./components/GenerativeRemove";
 
 const costumes = [
   { id: "zombie", name: "Zombie", icon: Skull },
@@ -53,7 +53,7 @@ export default function App() {
           setSelectedCostume={setSelectedCostume}
         />
         <BackgroundRemove />
-        <FormGroup />
+        <GenerativeRemove />
       </section>
 
       <div className="absolute inset-0 pointer-events-none">

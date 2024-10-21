@@ -51,7 +51,7 @@ const BackgroundRemove = () => {
       <select
         value={selectedBackground}
         onChange={handleChange}
-        className="bg-black border border-red-900 text-white rounded-lg p-2 mb-4 w-full"
+        className="bg-black border text-white rounded-lg p-2 mb-4 w-full"
       >
         <option value="" disabled>
           Elige un fondo
@@ -66,7 +66,7 @@ const BackgroundRemove = () => {
       {/* Botón para aplicar la transformación */}
       <button
         type="submit"
-        className="bg-black/70 py-4 px-8 flex gap-4 border rounded-md border-purple-800"
+        className="w-full bg-black/70 py-4 px-8 text-xl flex justify-center items-center gap-4 border rounded-md border-purple-800"
         disabled={isLoading || !selectedBackground} // Deshabilitar si no hay fondo seleccionado
       >
         <WandSparkles /> Aplicar

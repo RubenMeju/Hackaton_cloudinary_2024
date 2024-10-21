@@ -135,7 +135,7 @@ const CostumeSelector: React.FC<CostumeSelectorProps> = ({
         {/* Botón para aplicar la transformación */}
         <button
           type="submit"
-          className="bg-black/70 py-4 px-8 flex gap-4 border rounded-md border-purple-800"
+          className="w-full bg-black/70 py-4 px-8 text-xl flex justify-center items-center gap-4 border rounded-md border-purple-800"
           disabled={isLoading}
         >
           <WandSparkles /> Aplicar
