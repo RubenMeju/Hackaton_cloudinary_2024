@@ -17,7 +17,9 @@ const urlFirstImg =
   "https://res.cloudinary.com/meju/image/upload/v1729496628/fa7dds8gna7dfwhqebil.jpg";
 export const useCloudinaryUpload = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(urlFirstImg);
-  const [transformedUrl, setTransformedUrl] = useState<string | null>(null);
+  const [transformedUrl, setTransformedUrl] = useState<string | null>(
+    urlFirstImg
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [currentPublicId, setCurrentPublicId] = useState<string | null>(
     "fa7dds8gna7dfwhqebil"
